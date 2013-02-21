@@ -2,7 +2,9 @@ use inc::Module::Install;
 name 'AnyEvent-APNS-Server';
 all_from 'lib/AnyEvent/APNS/Server.pm';
 
-# requires '';
+requires 'Cache::LRU';
+requires 'Log::Minimal';
+requires 'Mouse';
 
 tests 't/*.t';
 author_tests 'xt';
