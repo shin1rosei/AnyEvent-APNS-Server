@@ -42,7 +42,7 @@ sub notify {
     my $res;
     eval { $res = $cv->recv};
     if (my $error = $@) {
-        critf "apns send error";
+        warnf "apns send error: %s$error";
     }
 }
 

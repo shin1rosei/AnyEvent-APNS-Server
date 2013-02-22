@@ -151,7 +151,7 @@ sub _connect_to_apns {
             infof "[apns] error fatal: $fatal message: $message";
         },
         on_connect  => sub {
-            warnf "[apns] on_connect";
+            infof "[apns] on_connect";
             $self->_last_connect_at(time);
 
             if (@{$self->message_queue}) { #未送信メッセージがあれば送信する
