@@ -59,7 +59,7 @@ AnyEvent::APNS::Client -
 
   use AnyEvent::APNS::Client;
 
-  AnyEvent::APNS::Client->new({
+  $client = AnyEvent::APNS::Client->new({
      host => 'server-host',
      port => 8888,
   });

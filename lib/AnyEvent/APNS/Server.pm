@@ -183,7 +183,7 @@ __END__
 
 =head1 NAME
 
-AnyEvent::APNS::Server -
+AnyEvent::APNS::Server - server module for connecting to Apple Push Notification (APNS).
 
 =head1 SYNOPSIS
 
@@ -198,11 +198,11 @@ AnyEvent::APNS::Server -
 
 =head1 DESCRIPTION
 
-AnyEvent::APNS::Server is
+This module is a server module which manages connection with APNS efficiently.
 
 =head1 AUTHOR
 
-Shinichiro Sei E<lt>sei {at} kayac.comE<gt>
+Shinichiro Sei E<lt>shin1rosei {at} kayac.comE<gt>
 
 =head1 SEE ALSO
 
