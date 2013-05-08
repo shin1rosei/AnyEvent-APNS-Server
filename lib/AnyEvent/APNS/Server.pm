@@ -91,6 +91,7 @@ sub run {
                 my $identifier = $self->apns->send(pack("H*", $p->{token}), {
                     aps => {
                         alert => decode_utf8($p->{msg}),
+                        sound => 'default',
                     },
                 });
                 $self->sent_token->set($identifier, $p->{token});
@@ -159,6 +160,7 @@ sub _connect_to_apns {
                     $self->apns->send(pack("H*", $q->{token}), {
                         aps => {
                             alert => decode_utf8($q->{msg}),
+                            sound => 'default',
                         },
                     });
                     infof "[apns] send from queue ".$q->{token};
