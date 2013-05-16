@@ -35,8 +35,8 @@ sub notify {
     critf("message not set") unless $msg;
 
     my $cv = $self->client->call('notify' => {
-        token => $device_token,
-        msg   => $msg,
+        token   => $device_token,
+        payload => $msg,
     });
 
     my $res;

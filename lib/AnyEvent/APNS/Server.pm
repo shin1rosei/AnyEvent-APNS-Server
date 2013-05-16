@@ -90,15 +90,11 @@ sub run {
             my ($res_cv, $params) = @_;
 
             my $p = $params->[0];
+
             infof "[mprpc server] send notify";
 
             if ($self->apns && $self->apns->connected) {
-                my $identifier = $self->apns->send(pack("H*", $p->{token}), {
-                    aps => {
-                        alert => decode_utf8($p->{msg}),
-                        sound => 'default',
-                    },
-                });
+                my $identifier = $self->_send($p);
                 $self->sent_token->set($identifier, $p->{token});
 
                 infof "[mprpc server] send notify complete %s", $p->{token};
@@ -162,12 +158,7 @@ sub _connect_to_apns {
 
             if (@{$self->message_queue}) { #未送信メッセージがあれば送信する
                 while (my $q = shift @{$self->message_queue}) {
-                    $self->apns->send(pack("H*", $q->{token}), {
-                        aps => {
-                            alert => decode_utf8($q->{msg}),
-                            sound => 'default',
-                        },
-                    });
+                    $self->_send($q);
                     infof "[apns] send from queue ".$q->{token};
                 }
             }
@@ -187,6 +178,23 @@ sub _connect_to_apns {
     }
 
     $self->apns->connect;
+}
+
+sub _send {
+    my ($self, $q) = @_;
+
+    my $payload;
+    if (ref $q->{payload}) {
+        $payload = $q->{payload};
+    }
+    else {
+        $payload = {
+            alert => decode_utf8($q->{payload}),
+        };
+    }
+    $self->apns->send(pack("H*", $q->{token}) => {
+        aps => $payload,
+    });
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -62,6 +62,7 @@ tcp_server undef, $apns_port, sub {
 
             is(length $payload, $payload_length, 'payload length ok');
             is $p->{aps}->{alert}, 'test', 'value of alert';
+            is $p->{aps}->{sound}, 'test sound', 'value of sound';
         });
 
         my $t; $t = AnyEvent->timer(
@@ -69,7 +70,6 @@ tcp_server undef, $apns_port, sub {
             cb    => sub {
                 undef $t;
                 done_testing;
-
                 $cv->send;
             },
         );
@@ -98,7 +98,10 @@ test_tcp (
             port => $port,
         });
 
-        $client->notify(unpack("H*", 'd'x32), 'test');
+        $client->notify(unpack("H*", 'd'x32), +{
+            alert => 'test',
+            sound => 'test sound',
+        });
         $cv->recv;
     },
 );
