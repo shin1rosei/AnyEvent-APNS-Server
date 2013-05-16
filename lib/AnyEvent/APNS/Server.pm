@@ -10,6 +10,7 @@ use Mouse;
 use Log::Minimal;
 
 use AnyEvent::APNS;
+use AnyEvent::MPRPC::Server;
 
 use Cache::LRU;
 use Try::Tiny;
@@ -27,6 +28,10 @@ has is_sandbox => (
 );
 
 has port => (
+    is => 'ro',
+);
+
+has debug_apns_port => (
     is => 'ro',
 );
 
@@ -176,6 +181,11 @@ sub _connect_to_apns {
             }
         },
     ));
+
+    if ($self->debug_apns_port) {
+        $self->apns->debug_port($self->debug_apns_port);
+    }
+
     $self->apns->connect;
 }
 
