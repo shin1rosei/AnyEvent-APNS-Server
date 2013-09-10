@@ -168,7 +168,7 @@ sub _connect_to_apns {
 
             if ($state == 8) { #不正なtoken
                 my $token = $self->sent_token->get($identifier) || undef;
-                $self->on_error_response($token, @_);
+                $self->on_error_response->($token, @_);
             }
         },
     ));
